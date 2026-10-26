@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #dbeafe, #e9d5ff);
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4338ca;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: 2px solid #818cf8;
+            border-color: #6366f1;
+        }
+
+        .gender-options {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .gender-options label {
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .gender-options input {
+            width: auto;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3730a3;
+        }
+
+        .error {
+            padding: 12px;
+            background: #fee2e2;
+            color: #b91c1c;
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            padding: 20px;
+            background: #dcfce7;
+            color: #166534;
+            border-radius: 8px;
+            margin-top: 20px;
+            overflow-wrap: anywhere;
+        }
+
+        .success h2 {
+            margin-top: 0;
+        }
+
+        .success p {
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Student Registration</h1>
+        <p class="subtitle">Fill in your details to register</p>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name"
+                       placeholder="Enter your full name"
+                       maxlength="100" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email"
+                       placeholder="example@email.com"
+                       maxlength="254" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone"
+                       placeholder="10-digit mobile number"
+                       pattern="[0-9]{10}"
+                       maxlength="10" required>
+            </div>
+
+            <div class="form-group">
+                <label>Gender *</label>
+                <div class="gender-options">
+                    <label>
+                        <input type="radio" name="gender"
+                               value="Male" required> Male
+                    </label>
+                    <label>
+                        <input type="radio" name="gender"
+                               value="Female"> Female
+                    </label>
+                    <label>
+                        <input type="radio" name="gender"
+                               value="Other"> Other
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth *</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+
+            <div class="form-group">
+                <label for="course">Select Course *</label>
+                <select id="course" name="course" required>
+                    <option value="">-- Select Course --</option>
+                    <option value="Computer Engineering">
+                        Computer Engineering
+                    </option>
+                    <option value="Information Technology">
+                        Information Technology
+                    </option>
+                    <option value="Mechanical Engineering">
+                        Mechanical Engineering
+                    </option>
+                    <option value="Civil Engineering">
+                        Civil Engineering
+                    </option>
+                    <option value="Electronics Engineering">
+                        Electronics Engineering
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea id="address" name="address"
+                          rows="3" maxlength="500"
+                          placeholder="Enter your address"></textarea>
+            </div>
+
+            <button type="submit">Register Now</button>
+        </form>
+
+        {% if student %}
+            <div class="success">
+                <h2>Registration Successful!</h2>
+                <p><strong>Name:</strong> {{ student.name }}</p>
+                <p><strong>Email:</strong> {{ student.email }}</p>
+                <p><strong>Phone:</strong> {{ student.phone }}</p>
+                <p><strong>Gender:</strong> {{ student.gender }}</p>
+                <p><strong>Date of Birth:</strong> {{ student.dob }}</p>
+                <p><strong>Course:</strong> {{ student.course }}</p>
+                <p><strong>Address:</strong> {{ student.address or "Not provided" }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
